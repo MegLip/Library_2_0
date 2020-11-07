@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spis książek wybranego autora</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>Lista tytułów</h2>
+
+    <table>
+        <thead>
+        <th>Id</th>
+        <th>Tytuł</th>
+        <th>Rok wydania</th>
+        </thead>
+    {% for book in books %}
+        <tr>
+            <td>{{ book.id }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.year }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+    <br>
+    <a href ="/authors/delete/{{author_id}}"><input type="submit" value="Usuń autora ze spisu"></a>
+    <br><br>
+
+    <form method="POST" action="/authors/{{author_id}}">
+        {{ form.hidden_tag() }}
+        <table>
+            {% for field in form if field.widget.input_type != 'hidden' %}
+                <tr>
+                    <th>{{ field.label }} {% if field.flags.required %}*{% endif %}</th>
+                    <td>{{ field }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <input type="submit" value="Usuń książkę ze spisu">
+    </form>
+<br>
+    <a href="/books/">Do listy książek</a><br><br>
+    <a href="/authors/">Do listy autorów</a>   
+</body>
+</html>
