@@ -1,0 +1,64 @@
+  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Info o wypożyczeniach</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <a href="/authors/">Do listy autorów</a><br><br>
+    <a href="/books/">Do listy książek</a><br><br>
+    <table>
+        <thead>
+        <th>Id</th>
+        <th>Tytuł</th>
+        <th>Czy wypożyczone</th>
+        <th>Kiedy?</th>
+        <th>Komu?</th>
+        </thead>
+    {% for bor in borrowed %}    
+        <tr>
+            <td>{{ bor.id }}</td>
+            <td>{{ bor.id_book }}</td>
+            <td>{{ bor.borrowed }}</td>
+            <td>{{ bor.borrow_date }}</td>
+            <td>{{ bor.where }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+
+    <br>
+    <br>
+    <!--<a href ="/sql/books/update/{{book_id}}"><input type="submit" value="Zmień dane książki"></a>-->
+
+    <form method="POST" action="/borrowed/">
+        {{ form2.hidden_tag() }}
+        <table>
+            {% for field in form2 if field.widget.input_type != 'hidden' %}
+                <tr>
+                    <th>{{ field.label }} {% if field.flags.required %}*{% endif %}</th>
+                    <td>{{ field }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <input type="submit" value="Książkę o podanym ID zwrócono">
+    </form>
+
+    <h2> Dodaj: </h2>
+    <form method="POST" action="/borrowed/">
+        {{ form.hidden_tag() }}
+        <table>
+            {% for field in form if field.widget.input_type != 'hidden' %}
+                <tr>
+                    <th>{{ field.label }} {% if field.flags.required %}*{% endif %}</th>
+                    <td>{{ field }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <input type="submit" value="Zapisz">
+    </form>
+</body>
+</html>
