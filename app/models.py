@@ -20,7 +20,8 @@ class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), index=True)
     year = db.Column(db.Numeric(4, 0))
-    author = db.relationship('Author', secondary=book_author, backref=db.backref('books', lazy='dynamic'))
+    author = db.relationship(
+        'Author', secondary=book_author, backref=db.backref('books', lazy='dynamic'))
     borrowed = db.relationship('Borrowed', backref='book')
 
     def __repr__(self):
