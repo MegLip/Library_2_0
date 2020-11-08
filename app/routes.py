@@ -8,7 +8,7 @@ from app.forms import BooksLibForm, AuthorLibForm, DeleteForm, BorrowedForm
 # wyświetla wszystkie książki w bazie lub tworzy nową pozycję książkową
 @app.route("/books/", methods=["GET", "POST"])
 def books_list():
-    form = BooksLibForm()
+    form = BooksLibForm.new()
     books_all = Book.query.all()
     if request.method == "POST":
         if form.validate_on_submit():
@@ -37,10 +37,10 @@ def authors_list():
             return redirect(url_for("authors_list"))
     return render_template("authors.html", authors=authors, form=form)
 
-
+# wyświetla wypożyczone książki i zwraca True jeśli książka jest wypożyczona
 @app.route("/borrowed/", methods=["GET", "POST"])
-def borrowing_list():
-    form = BorrowedForm()
+def borrowed_list():
+    form = BorrowedForm.new()
     form2 = DeleteForm()
     borrowed = Borrowed.query.all()
     books = Book.query.all()
@@ -57,10 +57,11 @@ def borrowing_list():
             borrow.borrowed = False
             db.session.commit()
             return redirect(url_for("borrowed_list"))
-    return render_template("borrowed.html", borrowing=borrowing, form=form, books=books, form2=form2)
+    return render_template("borrowed.html", borrowed=borrowed, form=form, books=books, form2=form2)
 
 
 # pokazuje konkretny rekord z bazy danych, pozwala na zmianę danych lub usunięcie książki
+@app.route("/books/<int:book_id>", methods=["GET", "POST"])
 def get_book(book_id):
     form = BooksLibForm()
     book = Book.query.get(book_id)
@@ -69,7 +70,7 @@ def get_book(book_id):
         book.title = form.title.data
         book.year = form.year.data
         db.session.commit()
-        author1 = Author.query.filter_by(name=form.author.data).first()
+        author1 = Author.query.filter_by(name=form.author.data)
         author1.books.append(book)
         db.session.commit()
         return redirect(url_for("get_book"))
