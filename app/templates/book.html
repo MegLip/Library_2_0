@@ -10,12 +10,14 @@
     <a href="/books/">Do listy książek</a><br><br>
     <table>
         <thead>
+        <th>Id</th>    
         <th>Tytuł</th>
         <th>Autor</th>
         <th>Rok wydania</th>
         <th>Wypożyczenia</th>
         </thead>
         <tr>
+            <td>{{ book.id }}</td>
             <td>{{ book.title }}</td>
             <td>{{ book.author }}</td>
             <td>{{ book.year }}</td>
@@ -25,8 +27,8 @@
 
     <br>
     <a href ="/books/delete/{{book_id}}"><input type="submit" value="Usuń książkę z biblioteki"></a>
-    <!--<br><br>
-    <a href ="/sql/books/update/{{book_id}}"><input type="submit" value="Zmień dane książki"></a>-->
+
+    <a href ="/books/update/{{book_id}}"><input type="submit" value="Zmień dane książki"></a>-->
 
     <h2> Zmień dane: </h2>
     <form method="POST" action="/books/{{ book_id }}">
