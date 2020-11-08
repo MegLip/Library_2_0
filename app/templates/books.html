@@ -1,34 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Biblioteka i lista</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-
-<body>
-<h2>Spis książek w bibliotece</h2>
-<a href="/authors/">Do listy autorów</a><br><br>
-<a href="/borrowed/">Do listy wypożyczeń</a><br><br>
-
-<table>
-    <thead>
-    <th>Tytuł</th>
-    <th>Autor</th>
-    <th>Rok wydania</th>
-    </thead>
-{% for book in books %}
-    <tr>
-        <td><a href="/books/{{ book.id }}">{{ book.title }}</a></td>
-        <td>{{ book.author }}</td>
-        <td>{{ book.year }}</td>
-    </tr>
-{% endfor %}
-</table>
-<div>
-    <h2> Dodaj nowy tytuł: </h2>
-    <form method="POST" action="/books/">
-        {{ form.hidden_tag() }}
+    <head>
+        <meta charset="UTF-8">
+        <title>Biblioteka i lista</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <h2>Spis książek w bibliotece</h2>
+        <a href="/authors/">Do listy autorów</a><br><br>
+        <a href="/borrowed/">Do listy wypożyczeń</a><br><br>
+        <table>
+            <thead>
+            <th>Tytuł</th>
+            <th>Autor</th>
+            <th>Rok wydania</th>
+            </thead>
+        {% for book in books %}
+            <tr>
+            <td><a href="/books/{{ book.id }}">{{ book.title }}</a></td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.year }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    <div>
+        <h2> Dodaj nowy tytuł: </h2>
+        <form method="POST" action="/books/">
+            {{ form.hidden_tag() }}
         <table>
             {% for field in form if field.widget.input_type != 'hidden' %}
                 <tr>
@@ -38,7 +36,7 @@
             {% endfor %}
         </table><br>
         <input type="submit" value="Zapisz">
-    </form>
-</div>
+        </form>
+    </div>
 </body>
 </html>
