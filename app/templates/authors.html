@@ -1,38 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Spis autorów - lista</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-<h2>Lista autorów</h2>
-<a href="/books/">Do listy książek</a><br><br>
-
-<table>
-    <thead>
-    <th>Autor</th>
-    </thead>
-{% for author in authors %}
-    <tr>
-        <td><a href="/authors/{{ author.id }}">{{ author.name }}</a></td>
-    </tr>
-{% endfor %}
-</table>
-<div>
-    <h2> Dodaj nowego autora: </h2>
-    <form method="POST" action="/authors/">
-        {{ form.hidden_tag() }}
-        <table>
-            {% for field in form if field.widget.input_type != 'hidden' %}
-                <tr>
-                    <th>{{ field.label }} {% if field.flags.required %}*{% endif %}</th>
-                    <td>{{ field }}</td>
-                </tr>
-            {% endfor %}
-        </table><br>
-        <input type="submit" value="Zapisz">
-    </form>
-</div>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Spis autorów - lista</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <h2>Lista autorów</h2>
+        <a href="/books/">Do listy książek</a><br><br>
+    <table>
+        <thead>
+        <th>Autor</th>
+        </thead>
+    {% for author in authors %}
+        <tr>
+            <td><a href="/authors/{{ author.id }}">{{ author.name }}</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+    <div>
+        <h2> Dodaj nowego autora: </h2>
+        <form method="POST" action="/authors/">
+            {{ form.hidden_tag() }}
+            <table>
+                {% for field in form if field.widget.input_type != 'hidden' %}
+                    <tr>
+                        <th>{{ field.label }} {% if field.flags.required %}*{% endif %}</th>
+                        <td>{{ field }}</td>
+                    </tr>
+                {% endfor %}
+            </table><br>
+            <input type="submit" value="Zapisz">
+        </form>
+    </div>
+    </body>
 </html>
