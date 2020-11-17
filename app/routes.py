@@ -95,7 +95,7 @@ def get_authors_books(author_id):
 
 
 # usuwa rekord książki o danym id z bazy danych
-@app.route("/books/delete/<int:book_id>", methods=['GET'])
+@app.route("/books/<int:book_id>/delete", methods=['GET'])
 def delete_book(book_id):
     book = Book.query.get(book_id)
     db.session.delete(book)
@@ -105,7 +105,7 @@ def delete_book(book_id):
 
 
 # usuwa rekord autora z bazy danych
-@app.route("/authors/delete/<int:author_id>", methods=['GET'])
+@app.route("/authors/<int:author_id>/delete", methods=['GET'])
 def delete_author(author_id):
     author = Author.query.get(author_id)
     db.session.delete(author)
