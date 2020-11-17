@@ -11,24 +11,22 @@ class Author(db.Model):
 
 
 book_author = db.Table(
-    'join', db.Column('author_id', db.Integer, db.ForeignKey('author.id')),
-    db.Column('book_id', db.Integer, db.ForeignKey('book.id'))
+    'join', db.Column('author_id', db.Integer, db.ForeignKey('author.id'), primary_key=True),
+    db.Column('book_id', db.Integer, db.ForeignKey('book.id'), primary_key=True)
     )
 
 
 class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), index=True)
-    year = db.Column(db.Numeric(4, 0))
     author = db.relationship(
         'Author', secondary=book_author, backref=db.backref('books', lazy='dynamic'))
+    year = db.Column(db.Numeric(4, 0))
     borrowed = db.relationship('Borrowed', backref='book')
 
     def __repr__(self):
         if self.borrowed:
             return f"{self.title}, {self.author}, {self.year}, {self.borrowed[-1]}"
-        else:
-            return f"{self.title}, {self.author}, {self.year}, is on the shelf"
 
 
 class Borrowed(db.Model):
@@ -41,5 +39,3 @@ class Borrowed(db.Model):
     def __repr__(self):
         if self.borrowed is True:
             return f"borrowed to {self.where}, {self.borrow_date}"
-        else:
-            print("The book is on the shelf")
